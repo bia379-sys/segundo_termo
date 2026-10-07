@@ -1,0 +1,46 @@
+.equipe {
+    display: flex;
+    gap: 30px;
+    
+}
+
+.pamonha {
+    display: flex;
+/* O texto fica agrupado na parte superior da página*/
+    /* justify-content: flex-start;  */
+/* O texto fica agrupado no centro da tela*/
+    /* justify-content: center; */
+/* Texto fica agrupado na parte inferior da tela */
+    /* justify-content: flex-end; */
+/* Texto se separa em três colunas nos cantos e no centro da tela*/
+    /* justify-content: space-between; */
+/* Texto se separa em 3 colunas , mas de forma centralizada */
+    /* justify-content: space-evenly; */
+}
+
+.cooperar {
+    display: flex;
+    align-items: flex-start; 
+    gap: 20px;
+
+}
+.cooperando {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+.cooperador {
+    display: flex;
+    align-items: flex-end;
+    gap: 60px;
+}
+.principal{
+    display: flex;
+
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
