@@ -68,16 +68,16 @@ CREATE TABLE pagamento (
 
 -- DADOS INICIAIS
 INSERT INTO cliente (nome, email, telefone, cidade, ativo) VALUES
-('Ana Silva', 'ana@email.com', '19999990001', 'Limeira', TRUE),
-('Bruno Souza', 'bruno@email.com', '19999990002', 'Limeira', TRUE),
-('Carla Mendes', 'carla@email.com', NULL, 'Americana', TRUE),
-('Diego Santos', 'diego@email.com', '19999990004', 'Campinas', TRUE),
-('Elisa Rocha', 'elisa@email.com', NULL, 'Limeira', TRUE),
-('Felipe Lima', 'felipe@email.com', '19999990006', 'Americana', TRUE),
-('Gabriela Alves', 'gabriela@email.com', '19999990007', 'Piracicaba', TRUE),
-('Henrique Costa', 'henrique@email.com', NULL, 'Limeira', FALSE),
-('Isabela Martins', 'isabela@email.com', '19999990009', 'Campinas', TRUE),
-('João Pereira', 'joao@email.com', '19999990010', 'Limeira', TRUE);
+('Ana Silva', 'ana1@email.com', '19999990001', 'Limeira', TRUE),
+('Bruno Souza', 'bruno2@email.com', '19999990002', 'Limeira', TRUE),
+('Carla Mendes', 'carla3@email.com', NULL, 'Americana', TRUE),
+('Diego Santos', 'diego4@email.com', '19999990004', 'Campinas', TRUE),
+('Elisa Rocha', 'elisa5@email.com', NULL, 'Limeira', TRUE),
+('Felipe Lima', 'felipe6@email.com', '19999990006', 'Americana', TRUE),
+('Gabriela Alves', 'gabriela7@email.com', '19999990007', 'Piracicaba', TRUE),
+('Henrique Costa', 'henrique8@email.com', NULL, 'Limeira', FALSE),
+('Isabela Martins', 'isabela9@email.com', '19999990009', 'Campinas', TRUE),
+('João Pereira', 'joao0@email.com', '19999990010', 'Limeira', TRUE);
 
 INSERT INTO categoria (nome) VALUES
 ('Cafés'), ('Bebidas Geladas'), ('Doces'), ('Salgados'), ('Combos');
