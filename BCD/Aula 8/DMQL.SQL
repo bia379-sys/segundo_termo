@@ -68,16 +68,16 @@ CREATE TABLE pagamento (
 
 -- DADOS INICIAIS
 INSERT INTO cliente (nome, email, telefone, cidade, ativo) VALUES
-('Ana Silva', 'ana1@email.com', '19999990001', 'Limeira', TRUE),
-('Bruno Souza', 'bruno2@email.com', '19999990002', 'Limeira', TRUE),
-('Carla Mendes', 'carla3@email.com', NULL, 'Americana', TRUE),
-('Diego Santos', 'diego4@email.com', '19999990004', 'Campinas', TRUE),
-('Elisa Rocha', 'elisa5@email.com', NULL, 'Limeira', TRUE),
-('Felipe Lima', 'felipe6@email.com', '19999990006', 'Americana', TRUE),
-('Gabriela Alves', 'gabriela7@email.com', '19999990007', 'Piracicaba', TRUE),
-('Henrique Costa', 'henrique8@email.com', NULL, 'Limeira', FALSE),
-('Isabela Martins', 'isabela9@email.com', '19999990009', 'Campinas', TRUE),
-('João Pereira', 'joao0@email.com', '19999990010', 'Limeira', TRUE);
+('Ana Silva', 'ana2@email.com', '19999990001', 'Limeira', TRUE),
+('Bruno Souza', 'bruno3@email.com', '19999990002', 'Limeira', TRUE),
+('Carla Mendes', 'carla4@email.com', NULL, 'Americana', TRUE),
+('Diego Santos', 'diego5@email.com', '19999990004', 'Campinas', TRUE),
+('Elisa Rocha', 'elisa6@email.com', NULL, 'Limeira', TRUE),
+('Felipe Lima', 'felipe7@email.com', '19999990006', 'Americana', TRUE),
+('Gabriela Alves', 'gabriela8@email.com', '19999990007', 'Piracicaba', TRUE),
+('Henrique Costa', 'henrique0@email.com', NULL, 'Limeira', FALSE),
+('Isabela Martins', 'isabela1@email.com', '19999990009', 'Campinas', TRUE),
+('João Pereira', 'joao10@email.com', '19999990010', 'Limeira', TRUE);
 
 INSERT INTO categoria (nome) VALUES
 ('Cafés'), ('Bebidas Geladas'), ('Doces'), ('Salgados'), ('Combos');
@@ -130,7 +130,7 @@ SET telefone = '199999990210'
 WHERE id_cliente = 3;
 -- DETERMINAR O COMANDO WHERE SEMPRE :)
 
-select * from cliente;
+select * from pedido
 
 -- EX 2: ATUALIZANDO VÁRIOS CAMPOS
 
@@ -146,11 +146,11 @@ SET preco = preco * 1.05
 WHERE id_categoria = 1;
 
 -- EX 4: ATUALIZANDO SEM WHERE 
--- UPDATE produto
+UPDATE produto
 -- SET preco = 1.00;
 -- CUIDADO AO UTILIZAR ESSA LINHA
 
-EX 5: ATUALIZANDO CONDICINAIS 
+--EX 5: ATUALIZANDO CONDICINAIS 
 UPDATE produto 
 SET preco = CASE 
     WHEN preco <= 15 THEN preco * 1.10 
@@ -158,7 +158,7 @@ SET preco = CASE
 END
 WHERE ativo = TRUE;
 
-EX 6: ATUALIZANDO PARA NULL
+--EX 6: ATUALIZANDO PARA NULL
 UPDATE cliente
 SET telefone = NULL
 WHERE id_cliente = 5;
@@ -178,3 +178,28 @@ CREATE TABLE Especiais da Casa (
 
 INSERT INTO Especiais da Casa (nome) VALUES
 ('Lanche'), ('Bebidas Quentes'), ('Tortas'), ('Bolos'), ('Promocoes');
+
+
+--TRANSAÇÕES -- SEGURANÇA E INTEGRIDADE DE DADOS
+START TRANSACTION;
+UPDATE produto
+SET preco = preco * 1.50
+WHERE id_categoria = 1;
+
+SELECT id_produto, nome, preco
+FROM produto
+WHERE id_categoria = 1;
+
+-- DESFAZER AÇÕES
+ROLLBACK;
+
+-- REALIZAR OU CONFIRMA A AÇÃO
+COMMIT
+
+-- EX 2:
+START TRANSACTION;
+UPDATE cliente
+SET cidade = 'Limeira'
+WHERE id_cliente = 3;
+
+COMMIT

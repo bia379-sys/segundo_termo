@@ -3,7 +3,7 @@ USE smartcoffee_dml_beatriz;
 -- IMPORTANTE:
 -- Para toda questão de UPDATE ou DELETE, escreva primeiro um SELECT
 -- com o mesmo WHERE para validar os registros afetados.
-SELECT * FROM cliente
+SELECT * FROM categoria
 -- PARTE A - INSERT
 
 -- 1. Cadastre dois novos clientes com dados diferentes.
@@ -55,23 +55,34 @@ SET telefone = '19956732126',
 WHERE id_cliente = 39;
 
 -- 9. Aumente em 8% o preço dos produtos da categoria 'Especiais da Casa'.
-
+UPDATE produto
+SET preco = preco * 0.08
+WHERE id_categoria = 6;
 
 -- 10. Altere o status do pedido criado para 'PREPARANDO'.
+UPDATE pedido
+SET status = 'PREPARANDO'
+WHERE id_pedido = 5;
 
 
 -- 11. Atualize valor_total do pedido de acordo com os itens cadastrados.
 --     Você pode calcular previamente com SELECT SUM(quantidade * preco_unitario).
-
+update pedido
+set valor_total = (select SUM(quantidade * preco_unitario) from item_pedido where id_pedido = @pedido_atividade)
+where id_pedido = @pedido_atividade;
 
 -- 12. Escolha um dos produtos criados e faça uma exclusão lógica (ativo = FALSE).
+UPDATE produto
+SET ativo = FALSE
+WHERE id_produto= 6;
 
 
 -- PARTE C - DELETE
 
 -- 13. Crie um cliente de teste sem pedidos.
 --     Depois localize e exclua apenas esse cliente.
-
+INSERT INTO cliente (nome, email, telefone, cidade, ativo) VALUES
+('Alison Almeida', 'alisonal@email.com', '19973485767', 'Rondônia', TRUE);
 
 -- 14. Tente excluir um cliente da base original que possua pedidos.
 --     Deixe o DELETE comentado após o teste e descreva o erro abaixo.
@@ -83,3 +94,30 @@ WHERE id_cliente = 39;
 
 
 -- 16. Crie uma categoria temporária chamada 'Excluir Depois' e remova-a.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--  Checklist do aluno 
+-- Sei diferenciar DDL, DQL e DML. > NÃO AINDA TENHO DÚVIDAS
+-- Consigo inserir uma ou várias linhas. > SIM
+-- Entendo AUTO_INCREMENT, DEFAULT e NULL. > SIM
+-- Consigo atualizar uma ou várias linhas com segurança.> SIM
+-- Nunca executo UPDATE ou DELETE sem conferir o WHERE. > SIM
+-- Entendo por que uma FK pode bloquear uma exclusão. > NÃO
+-- Consigo manipular registros relacionados. > SIM
+-- Sei utilizar COMMIT e ROLLBACK como apoio às operações. >NÃO
