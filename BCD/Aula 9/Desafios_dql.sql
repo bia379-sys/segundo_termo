@@ -68,15 +68,24 @@ GROUP BY id_categoria;
 
 
 -- 12. Mostre menor preço, maior preço e preço médio dos produtos.
-
+SELECT MIN(preco), MAX(preco), AVG(preco) AS MÉDIA_PREÇOS
+FROM produto;
 
 
 -- 13. Informe quantos clientes existem em cada cidade.
+SELECT cidade, COUNT(*) AS QTDE_CIDADES
+FROM cliente
+GROUP BY cidade;
 
 
 -- 14. Mostre somente as cidades que possuem dois ou mais clientes.
-
+SELECT cidade, COUNT(*) AS QUANTIDADE_CLIENTES
+FROM cliente
+GROUP BY cidade
+HAVING COUNT (*) >= 2;
 
 -- 15. Calcule o faturamento total considerando apenas pedidos FINALIZADOS.
-
+SELECT SUM(valor_total) AS FATURAMENTO_MENSAL
+FROM pedido
+WHERE status = 'ABERTO'
 
