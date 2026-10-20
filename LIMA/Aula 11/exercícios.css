@@ -1,0 +1,43 @@
+.lab-grid {
+    display: grid;
+    /* grid-template-columns: repeat(3, 1fr); */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+}
+
+.lab-grid {
+    display: grid;
+        grid-template-columns: 2fr 1fr;
+/* a fileira da esquerda fica maior e mais espaçada que a esquerda */
+}
+
+
+.lab-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+}
+
+
+.lab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+@media (max-width: 600px) {
+    .lab-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 400px) {
+    .lab-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.lab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+} 
+/* Ele se ajusta ao tamanho definido */
