@@ -146,8 +146,12 @@ GROUP BY CA.id_categoria, CA.nome
 ORDER BY preco_medio DESC
 
 -- 23. Descubra quais produtos possuem preço superior ao preço médio de todos os produtos.
-SELECT nome, preco FROM produto
-WHERE preco >= 10;
+SELECT nome, preco
+FROM produto
+WHERE preco > (SELECT AVG(preco)
+FROM produto
+)
+ORDER BY preco DESC;
 
 -- 24. Classifique os produtos como “Econômico”, “Intermediário” ou “Premium”, utilizando faixas de preço definidas por você.
 select nome,preco,
