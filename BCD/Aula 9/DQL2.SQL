@@ -238,3 +238,123 @@ ORDER BY colunas
 LIMIT quantidade;
 -- dica para seguir em ordem lógica para uma consulta parcial ou completa
 ---------------------------------------------------------------------------------
+
+SELECT COUNT(nome) AS Total_produtos
+FROM produto;
+
+--- PARTE II - RELACIONAMENTOS ENTRE TABELAS - JOINS - JUNÇÃO DE TABELAS
+
+--EX 19: PEDIDOS COM O NOME DO CLIENTE
+--INNER JOIN - RETORNA PEGISTROS QUE POSSUEM CORRESPONDÊNCIAS ENTRE TABELAS 
+SELECT P.id_pedido, P.data_pedido, C.nome AS cliente, P.valor_total
+FROM pedido AS P
+INNER JOIN cliente AS C 
+ON C.id_cliente = P.id_cliente
+-- OBS: RELACIONE O CLIENTE CUJO ID_CLIENTE É IGUAL AP ID_CLIENTE GRAVADO NO PEDIDO
+-- P E C SÃO APELIDOS OU ALIASES PARA DEIXAR MAIS CURTAS E LEGÍVEIS 
+-- LEFT JOIN -- MANTÉM TODOS OS REGISTROS DA TABELA DA ESQUERDA MESMO QUANDO NÃO POSSUI CORRESPONDÊNCIA NA TABELA DIREITA 
+
+-- EX 20: TODOS OS CLIENTES, INCLUSIVE QUEM NUNCA COMPROU OU QUEM NUNCA REALIZOU PEDIDO
+SELECT C.nome, P.id_pedido, P.data_pedido
+FROM cliente AS C
+LEFT JOIN pedido AS P
+ON P.id_cliente = C.id_cliente
+ORDER BY C.nome;
+
+-- EX 21: CLIENTES SEM PEDIDOS
+SELECT C.id_cliente, C.nome
+FROM cliente AS C
+LEFT JOIN pedido AS P
+ON P.id_cliente = C.id_cliente
+WHERE P.id_pedido IS NULL;
+
+-- JOIN COM TRÊS TABELAS
+-- EX 22: ITENS DE PEDIDO COM NOME DO PRODUTO
+SELECT P.id_pedido, PR.nome AS produto, IP.quantidade, IP.preco_unitario, IP.quantidade * IP.preco_unitario AS subtotal
+FROM pedido AS P
+INNER JOIN item_pedido AS IP
+ON IP.id_pedido = P.id_pedido
+INNER JOIN produto AS PR
+ON PR.id_produto = IP.id_produto
+ORDER BY P.id_pedido;
+
+-- EX 23: AGREGAÇÃP + JOINS
+-- QUANTIDADE DE PRODUTOS POR CATEGORIA
+SELECT CA.nome AS categoria, COUNT (PR.id_produto) AS qtde_produtos
+FROM categoria AS CA
+LEFT JOIN produto AS PR
+ON PR.id_categoria = CA.id_categoria
+GROUP BY CA.id_categoria, CA.nome
+ORDER BY qtde_produtos DESC;
+
+-- EX 24: TOTAL COMPRADO POR CLIENTE
+SELECT C.nome AS cliente, COUNT (P.id_pedido) AS qtde_pedidos, SUM(P.valor_total) AS total_comprado
+FROM cliente AS C
+INNER JOIN pedido AS P
+ON P.id_cliente = C.id_cliente
+ WHERE P.status = "Finalizado"
+ GROUP BY C.id_cliente, C.nome
+ ORDER BY total_comprado DESC;
+
+ -- RELATÓRIO COMPLETO DO PEDIDO
+ -- EX 25: COMBINAR VÁRIAS TABELAS EM UMA CONSULTA
+ SELECT P.id_pedido, DATE_FORMAT (P.data_pedido, '%d %m %Y %H:%i') AS DATA, C.nome AS cliente, PR.nome AS produto, IP.quantidade, IP.preco_unitario, IP. quantidade * IP.preco_unitario AS SUBTOTAL
+ FROM pedido AS P
+ INNER JOIN cliente AS C
+ ON C.id_cliente = P.id_cliente
+ INNER JOIN item_pedido AS IP
+ ON P.id_pedido = P.id_pedido
+ INNER JOIN produto AS PR
+ ON PR.id_produto = IP.id_produto
+ ORDER BY P.id_pedido, PR.nome;
+-- OBS: PADRÃO DE FORMATAÇÃO DE DATA NO BRASIL
+-- DATE_FORMAT (P.data_pedido, '%d %m %Y %H:%i')
+
+-- CRIANDO CLASSIFICAÇÕES
+-- EX 26: - CASE - PERMITE CONSTRUIR UMA CLASSIFICAÇÃO BASEADA EM REGRAS 
+select nome,preco,
+CASE 
+    WHEN preco < 8.00 THEN 'Econômico'
+    WHEN preco <= 15.00 THEN 'Intermediário'  
+    ELSE  'Premium'
+END AS classificação
+FROM produto
+ORDER BY preco;
+
+
+-- SUBCONSULTA 
+-- É UMA CONSULTA DENTRO DE OUTRA CONSULTA
+-- EX 27: PRODUTOS ACIMA DO PREÇO MÉDIO 
+SELECT nome, preco
+FROM produto
+WHERE preco > (SELECT AVG(preco)
+FROM produto
+)
+ORDER BY preco DESC;
+
+-- DEMONSTRAÇÃO COMPLETA E FINAL
+-- PASSO 1 - VISUALIZAR PRODUTOS
+SELECT * FROM produto;
+-- PASSO 2: SELECIONAR SOMENTE O NECESSÁRIO 
+SELECT nome, preco FROM produto;
+-- PASSO 3 - FILTRO
+SELECT nome, preco FROM produto
+WHERE preco >= 10;
+-- PASSO 4 - ORDENAR INFORMAÇÕES
+SELECT nome, preco FROM produto
+WHERE preco >= 10.00
+ORDER BY preco DESC;
+-- PASSO 5 - MOSTRAR CATEGORIA
+SELECT PR.nome AS produto, CA.nome AS categoria, PR.preco
+FROM produto AS PR
+INNER JOIN categoria AS CA 
+ON CA.id_categoria = PR.id_categoria
+WHERE PR.preco >= 10.00
+ORDER BY PR.preco DESC;
+-- PASSO 6 - PERGUNTA GERENCIAL
+SELECT CA.nome AS categoria, COUNT(PR.id_produto) AS produtos, ROUND (AVG(PR.preco),2) AS preco_medio
+FROM categoria AS CA
+INNER JOIN produto AS PR
+ON PR.id_categoria = CA.id_categoria
+GROUP BY CA.id_categoria, CA.nome
+ORDER BY preco_medio DESC
